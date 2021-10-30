@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "lib": ["ES7", "DOM"],
+    "module": "es6",
+    "moduleResolution": "node"
+  },
+  "files": ["./generator/index.ts"],
+  "outputDirectory": "dist"
+}
