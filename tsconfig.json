@@ -8,8 +8,6 @@
     "sourceMap": true,
     "lib": ["ES7", "DOM"],
     "module": "es6",
-    "moduleResolution": "node"
-  },
-  "files": ["./generator/index.ts"],
-  "outputDirectory": "dist"
+    "moduleResolution": "node",
+  }
 }
