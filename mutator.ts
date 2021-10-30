@@ -67,3 +67,6 @@ mutate();
 
 (window as any).setTileInterval = setInterval;
 (window as any).setTileAddress = setAddress;
+
+console.log("Call setTileInterval(millis) to set phase interval.");
+console.log("Call setTileAddress(address) to reset Tile for that address.");
