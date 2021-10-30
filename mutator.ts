@@ -21,6 +21,7 @@ const chars = [
 
 let address = "";
 let interval = 1000;
+let rate = 1;
 
 const randChar = () => chars[Math.floor(Math.random() * chars.length)];
 
@@ -30,8 +31,14 @@ for (let i = 0; i < 40; i++) {
 
 function mutate() {
   const newAddress = address.split("");
-  newAddress[Math.floor(Math.random() * 40)] = randChar();
+
+  for (let i = 0; i < rate; i++) {
+    newAddress[Math.floor(Math.random() * 40)] = randChar();
+  }
+
   address = newAddress.join("");
+
+  console.log(address);
 
   const canvas = document.getElementById("canvas");
 
@@ -63,12 +70,21 @@ export function setAddress(_address: string) {
   address = _address.toLowerCase();
 }
 
+export function setRate(_rate: number) {
+  if (_rate === 0 || _rate > 40) return;
+  rate = _rate;
+}
+
 mutate();
 
 (window as any).phaseInterval = setInterval;
+(window as any).phaseRate = setRate;
 (window as any).tileAddress = setAddress;
 
 console.log(
   "Call phaseInterval(millis) to set phase interval in milliseconds."
+);
+console.log(
+  "Call phaseRate(rate) to set number of address characters to change in each phase."
 );
 console.log("Call tileAddress(address) to reset Tile for that address.");
