@@ -65,8 +65,10 @@ export function setAddress(_address: string) {
 
 mutate();
 
-(window as any).setTileInterval = setInterval;
-(window as any).setTileAddress = setAddress;
+(window as any).phaseInterval = setInterval;
+(window as any).tileAddress = setAddress;
 
-console.log("Call setTileInterval(millis) to set phase interval.");
-console.log("Call setTileAddress(address) to reset Tile for that address.");
+console.log(
+  "Call phaseInterval(millis) to set phase interval in milliseconds."
+);
+console.log("Call tileAddress(address) to reset Tile for that address.");
