@@ -23,6 +23,8 @@ let showAddress = true;
 let address = "";
 let bpm = 60;
 let rate = 1;
+let size = 300;
+let paused = false;
 
 const randChar = () => chars[Math.floor(Math.random() * chars.length)];
 
@@ -31,7 +33,7 @@ for (let i = 0; i < 40; i++) {
 }
 
 function mutate() {
-  if (rate > 0) {
+  if (rate > 0 && !paused) {
     const newAddress = address.split("");
 
     for (let i = 0; i < rate; i++) {
@@ -39,24 +41,41 @@ function mutate() {
     }
 
     address = newAddress.join("");
+  }
 
-    console.log(address);
+  const canvas = document.getElementById("canvas");
+  const addressElem = document.getElementById("address");
+  const bpmInput = document.getElementById("bpm") as HTMLInputElement;
+  const bpmRange = document.getElementById("bpm-range") as HTMLInputElement;
+  const rateInput = document.getElementById("rate") as HTMLInputElement;
+  const addressInput = document.getElementById(
+    "address-input"
+  ) as HTMLInputElement;
 
-    const canvas = document.getElementById("canvas");
-    const addressElem = document.getElementById("address");
-    const bpmInput = document.getElementById("bpm") as HTMLInputElement;
-    const bpmRange = document.getElementById("bpm-range") as HTMLInputElement;
-    const rateInput = document.getElementById("rate") as HTMLInputElement;
-    const addressInput = document.getElementById(
-      "address-input"
-    ) as HTMLInputElement;
+  if (canvas) {
+    canvas.innerHTML = tileForAddress(address)
+      .viewbox("0 0 300 300")
+      .id("tile")
+      .svg();
+  }
+  if (addressElem) {
+    addressElem.innerHTML = showAddress ? "0x" + address : "";
+    addressElem.style.fontSize = size / 25 + "px";
+  }
+  if (bpmInput) bpmInput.value = bpm.toString();
+  if (bpmRange) bpmRange.value = bpm.toString();
+  if (rateInput) rateInput.value = rate.toString();
+  if (addressInput) addressInput.value = address;
 
-    if (canvas) canvas.innerHTML = tileForAddress(address).svg();
-    if (addressElem) addressElem.innerHTML = showAddress ? "0x" + address : "";
-    if (bpmInput) bpmInput.value = bpm.toString();
-    if (bpmRange) bpmRange.value = bpm.toString();
-    if (rateInput) rateInput.value = rate.toString();
-    if (addressInput) addressInput.value = address;
+  const svgElem = document.getElementById("tile");
+  if (svgElem) {
+    svgElem.setAttribute("width", size.toString() + "px");
+    svgElem.setAttribute("height", size.toString() + "px");
+  }
+
+  const pausePlayElem = document.getElementById("pause-play");
+  if (pausePlayElem) {
+    pausePlayElem.innerText = paused ? "Play" : "Pause";
   }
 
   setTimeout(function () {
@@ -129,4 +148,16 @@ docReady(() => {
       if (val.length !== 40) return;
       address = val.toLowerCase();
     });
+
+  document.getElementById("decrease-size").addEventListener("click", () => {
+    size = size - 50;
+  });
+
+  document.getElementById("increase-size").addEventListener("click", () => {
+    size = size + 50;
+  });
+
+  document.getElementById("pause-play").addEventListener("click", () => {
+    paused = !paused;
+  });
 });

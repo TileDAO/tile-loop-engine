@@ -10,15 +10,34 @@
 </head>
 <body>
   <div class="container">
-    <div>
+    <div class="tile-container">
       <div id="canvas"></div>
       <div id="address"></div>
     </div>
 
     <div class="inputs">
-      <input type="range" min="12" max="800" id="bpm-range">
-      <input type="number" id="bpm">
-      <input type="number" id="rate">
+      <div id="pause-play"></div>
+
+      <div style="flex: 1;"></div>
+
+      <div class="size-buttons">
+        <span id="decrease-size">-</span>
+        Size
+        <span id="increase-size">+</span>
+      </div>
+
+      <div style="flex: 1;"></div>
+
+      <div class="speed">
+        BPM
+        <input type="range" min="12" max="800" id="bpm-range">
+        <input type="number" id="bpm">
+        /
+        <input type="number" id="rate">
+      </div>
+
+      <div style="flex: 1;"></div>
+
       <input type="text" id="address-input">
     </div>
   </div>
