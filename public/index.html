@@ -6,8 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tile Phaser</title>
   <script src="/bundle.js"></script>
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <div id="canvas"></div>
+  <div class="container">
+    <div>
+      <div id="canvas"></div>
+      <div id="address"></div>
+    </div>
+
+    <div class="inputs">
+      <input type="range" min="12" max="800" id="bpm-range">
+      <input type="number" id="bpm">
+      <input type="number" id="rate">
+      <input type="text" id="address-input">
+    </div>
+  </div>
 </body>
 </html>

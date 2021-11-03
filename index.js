@@ -11,6 +11,10 @@ app.get("/bundle.js", function (req, res) {
   res.sendFile(path.join(path.resolve("public", "bundle.js")));
 });
 
+app.get("/style.css", function (req, res) {
+  res.sendFile(path.join(path.resolve("public", "style.css")));
+});
+
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log("Server started on port " + listener.address().port);
 });

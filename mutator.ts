@@ -19,8 +19,9 @@ const chars = [
   "f",
 ] as const;
 
+let showAddress = true;
 let address = "";
-let interval = 1000;
+let bpm = 60;
 let rate = 1;
 
 const randChar = () => chars[Math.floor(Math.random() * chars.length)];
@@ -30,28 +31,40 @@ for (let i = 0; i < 40; i++) {
 }
 
 function mutate() {
-  const newAddress = address.split("");
+  if (rate > 0) {
+    const newAddress = address.split("");
 
-  for (let i = 0; i < rate; i++) {
-    newAddress[Math.floor(Math.random() * 40)] = randChar();
+    for (let i = 0; i < rate; i++) {
+      newAddress[Math.floor(Math.random() * 40)] = randChar();
+    }
+
+    address = newAddress.join("");
+
+    console.log(address);
+
+    const canvas = document.getElementById("canvas");
+    const addressElem = document.getElementById("address");
+    const bpmInput = document.getElementById("bpm") as HTMLInputElement;
+    const bpmRange = document.getElementById("bpm-range") as HTMLInputElement;
+    const rateInput = document.getElementById("rate") as HTMLInputElement;
+    const addressInput = document.getElementById(
+      "address-input"
+    ) as HTMLInputElement;
+
+    if (canvas) canvas.innerHTML = tileForAddress(address).svg();
+    if (addressElem) addressElem.innerHTML = showAddress ? "0x" + address : "";
+    if (bpmInput) bpmInput.value = bpm.toString();
+    if (bpmRange) bpmRange.value = bpm.toString();
+    if (rateInput) rateInput.value = rate.toString();
+    if (addressInput) addressInput.value = address;
   }
-
-  address = newAddress.join("");
-
-  console.log(address);
-
-  const canvas = document.getElementById("canvas");
-
-  if (canvas) canvas.innerHTML = tileForAddress(address).svg();
 
   setTimeout(function () {
     mutate();
-  }, interval);
+  }, (60 / bpm) * 1000);
 }
 
-export function setInterval(_interval: number) {
-  interval = _interval;
-}
+mutate();
 
 export function setAddress(_address: string) {
   if (_address.startsWith("0x")) _address = _address.split("0x")[1];
@@ -70,21 +83,50 @@ export function setAddress(_address: string) {
   address = _address.toLowerCase();
 }
 
-export function setRate(_rate: number) {
-  if (_rate === 0 || _rate > 40) return;
-  rate = _rate;
+function docReady(fn: VoidFunction) {
+  // see if DOM is already available
+  if (
+    document.readyState === "complete" ||
+    document.readyState === "interactive"
+  ) {
+    // call on next available tick
+    setTimeout(fn, 1);
+  } else {
+    document.addEventListener("DOMContentLoaded", fn);
+  }
 }
 
-mutate();
+docReady(() => {
+  document.getElementById("canvas").addEventListener("click", () => {
+    showAddress = !showAddress;
+  });
 
-(window as any).phaseInterval = setInterval;
-(window as any).phaseRate = setRate;
-(window as any).tileAddress = setAddress;
+  document.getElementById("bpm").addEventListener("input", (e: InputEvent) => {
+    const val = parseInt((e.target as HTMLInputElement).value);
+    if (val < 12 || val > 800) return;
+    bpm = val;
+  });
 
-console.log(
-  "Call phaseInterval(millis) to set phase interval in milliseconds."
-);
-console.log(
-  "Call phaseRate(rate) to set number of address characters to change in each phase."
-);
-console.log("Call tileAddress(address) to reset Tile for that address.");
+  document
+    .getElementById("bpm-range")
+    .addEventListener("input", (e: InputEvent) => {
+      const val = parseInt((e.target as HTMLInputElement).value);
+      if (val < 12) return;
+      bpm = val;
+    });
+
+  document.getElementById("rate").addEventListener("input", (e: InputEvent) => {
+    const val = parseInt((e.target as HTMLInputElement).value);
+    if (val < 0 || val > 40) return;
+    rate = val;
+  });
+
+  document
+    .getElementById("address-input")
+    .addEventListener("input", (e: InputEvent) => {
+      let val = (e.target as HTMLInputElement).value;
+      if (val.startsWith("0x")) val = val.split("0x")[1];
+      if (val.length !== 40) return;
+      address = val.toLowerCase();
+    });
+});
