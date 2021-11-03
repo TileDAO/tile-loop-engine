@@ -10,13 +10,24 @@
 </head>
 <body>
   <div class="container">
-    <div class="tile-container">
-      <div id="canvas"></div>
-      <div id="address"></div>
-    </div>
+    <div id="tiles-container"></div>
 
-    <div class="inputs">
+    <div id="show-inputs"><></div>
+
+    <div id="inputs">
+      <div id="hide-inputs">X</div>
+
+      <div style="flex: 1;"></div>
+
       <div id="pause-play"></div>
+
+      <div style="flex: 1;"></div>
+
+      <div class="tiles-count">
+        <span id="tiles-1">1</span>
+        <span id="tiles-2">2</span>
+        <span id="tiles-3">3</span>
+      </div>
 
       <div style="flex: 1;"></div>
 
@@ -38,7 +49,7 @@
 
       <div style="flex: 1;"></div>
 
-      <input type="text" id="address-input">
+      <input type="text" id="address-input" placeholder="0x0000000000000000000000000000000000000000">
     </div>
   </div>
 </body>

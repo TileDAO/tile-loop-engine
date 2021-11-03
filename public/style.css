@@ -1,5 +1,8 @@
 body {
   margin: 0;
+}
+
+body, input {
   font-family: 'Courier';
 }
 
@@ -12,11 +15,18 @@ body {
   background: #000;
 }
 
+#tiles-container {
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
+
 .tile-container {
   text-align: center;
 }
 
-#address {
+.address {
   color: #888;
 }
 
@@ -24,7 +34,7 @@ body {
   position: absolute;
 }
 
-.inputs {
+#inputs {
   position: absolute;
   display: flex;
   align-items: center;
@@ -34,7 +44,7 @@ body {
   color: #444;
 }
 
-.inputs input {
+#inputs input {
   background: transparent;
   color: #444;
   padding: 5px;
@@ -45,7 +55,7 @@ body {
   margin-right: 10px;
 }
 
-#bpm-range {
+#inputs #bpm-range {
   width: 200px;
   appearance: none;
   -webkit-appearance: none;
@@ -55,7 +65,7 @@ body {
   padding: 0px;
 }
 
-#bpm-range::-webkit-slider-thumb {
+#inputs #bpm-range::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 12px;
@@ -65,7 +75,7 @@ body {
   border-radius: 50%;
 }
 
-#bpm-range::-moz-range-thumb {
+#inputs #bpm-range::-moz-range-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 20px;
@@ -79,7 +89,7 @@ body {
   cursor: pointer;
 }
 
-#address-input {
+#inputs #address-input {
   width: 280px;
   text-align: center;
 }
@@ -92,4 +102,19 @@ body {
   display: flex;
   align-items: center;
   font-size: 12px;
+}
+
+.tiles-count span {
+  cursor: pointer;
+}
+
+#show-inputs {
+  position: absolute;
+  left: 20px;
+  bottom: 24px;
+  color: #444;
+}
+
+#show-inputs, #hide-inputs {
+  cursor: pointer;
 }
